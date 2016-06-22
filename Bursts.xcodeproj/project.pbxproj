@@ -14,6 +14,9 @@
 		B6EF55551D1A209A003C6D79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6EF55531D1A209A003C6D79 /* LaunchScreen.storyboard */; };
 		B6EF55601D1A209A003C6D79 /* BurstsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF555F1D1A209A003C6D79 /* BurstsTests.swift */; };
 		B6EF556B1D1A209A003C6D79 /* BurstsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF556A1D1A209A003C6D79 /* BurstsUITests.swift */; };
+		B6EF55791D1A23EF003C6D79 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF55781D1A23EF003C6D79 /* LibraryViewController.swift */; };
+		B6EF557B1D1A245B003C6D79 /* BurstsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF557A1D1A245B003C6D79 /* BurstsManager.swift */; };
+		B6EF557D1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF557C1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		B6EF55661D1A209A003C6D79 /* BurstsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BurstsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EF556A1D1A209A003C6D79 /* BurstsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurstsUITests.swift; sourceTree = "<group>"; };
 		B6EF556C1D1A209A003C6D79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6EF55781D1A23EF003C6D79 /* LibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		B6EF557A1D1A245B003C6D79 /* BurstsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BurstsManager.swift; sourceTree = "<group>"; };
+		B6EF557C1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BurstPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 				B6EF554A1D1A209A003C6D79 /* AppDelegate.swift */,
 				B6EF554C1D1A209A003C6D79 /* ViewController.swift */,
 				B6EF554E1D1A209A003C6D79 /* Main.storyboard */,
+				B6EF557C1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift */,
+				B6EF55781D1A23EF003C6D79 /* LibraryViewController.swift */,
+				B6EF557A1D1A245B003C6D79 /* BurstsManager.swift */,
 				B6EF55511D1A209A003C6D79 /* Assets.xcassets */,
 				B6EF55531D1A209A003C6D79 /* LaunchScreen.storyboard */,
 				B6EF55561D1A209A003C6D79 /* Info.plist */,
@@ -256,7 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6EF557B1D1A245B003C6D79 /* BurstsManager.swift in Sources */,
 				B6EF554D1D1A209A003C6D79 /* ViewController.swift in Sources */,
+				B6EF55791D1A23EF003C6D79 /* LibraryViewController.swift in Sources */,
+				B6EF557D1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift in Sources */,
 				B6EF554B1D1A209A003C6D79 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
