@@ -9,6 +9,9 @@
 import UIKit
 import Photos
 
+// Global object
+var burstsManager = BurstsManager()
+
 class BurstsManager: NSObject {
     
     var imageManager: PHCachingImageManager!
@@ -43,7 +46,7 @@ class BurstsManager: NSObject {
         }
     }
     
-    func getBurstImages(id: String, size: CGSize, contentMode: PHImageContentMode, callback: (images: [UIImage?]) -> Void) {
+    func getBurstImages(id: String, size: CGSize, contentMode: PHImageContentMode, callback: (images: [UIImage?]) -> Void) -> PHFetchResult {
         let options = PHFetchOptions()
         options.includeAllBurstAssets = true
         options.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
@@ -53,21 +56,23 @@ class BurstsManager: NSObject {
         for _ in 0 ..< burstAssets.count {
             images.append(nil)
         }
-        burstAssets.enumerateObjectsUsingBlock { (asset, index, stop) in
-            self.imageManager.requestImageForAsset(
-                asset as! PHAsset,
-                targetSize: size,
-                contentMode: contentMode,
-                options: nil
-            ) {result, info in
-                if info![PHImageResultIsDegradedKey] === false {
-                    images[index] = result!
-                    if self._isComplete(images, length: burstAssets.count) {
-                        callback(images: images)
-                    }
-                }
-            }
-        }
+//        burstAssets.enumerateObjectsUsingBlock { (asset, index, stop) in
+//            self.imageManager.requestImageForAsset(
+//                asset as! PHAsset,
+//                targetSize: size,
+//                contentMode: contentMode,
+//                options: nil
+//            ) {result, info in
+//                if info![PHImageResultIsDegradedKey] === false {
+//                    images[index] = result!
+//                    if self._isComplete(images, length: burstAssets.count) {
+//                        callback(images: images)
+//                    }
+//                }
+//            }
+//        }
+        
+        return burstAssets
     }
     
     

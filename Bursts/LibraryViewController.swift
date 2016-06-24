@@ -12,29 +12,28 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var burstsManager = BurstsManager()
+    var allBurstIds: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        allBurstIds = burstsManager.getAllBursts()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let burstCount = burstsManager.getAllBursts().count
-        if burstCount == 0 {
+        if allBurstIds.count == 0 {
             return 1
         } else {
-            return burstCount
+            return allBurstIds.count
         }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BurstPreviewCell", forIndexPath: indexPath) as! BurstPreviewCollectionViewCell
-        let allBursts = burstsManager.getAllBursts()
-        burstsManager.getBurstCoverImage(allBursts[indexPath.item], size: CGSize(width: 180, height: 240), contentMode: .AspectFit, callback: { (image) in
+        burstsManager.getBurstCoverImage(allBurstIds[indexPath.item], size: CGSize(width: 240, height: 320), contentMode: .AspectFit, callback: { (image) in
             cell.previewImageView.image = image
+            cell.burstId = self.allBurstIds[indexPath.item]
         })
-        
         return cell
     }
     
@@ -44,14 +43,16 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource {
     }
     
     
-    /*
      // MARK: - Navigation
      
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        let detailVC = segue.destinationViewController as! DetailViewController
+        let cell = sender as! BurstPreviewCollectionViewCell
+        detailVC.burstId = cell.burstId
+        
      }
-     */
+    
     
 }

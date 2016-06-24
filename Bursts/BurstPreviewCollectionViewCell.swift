@@ -12,4 +12,6 @@ class BurstPreviewCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var previewImageView: UIImageView!
     
+    var burstId: String! = ""
+    
 }
