@@ -18,24 +18,24 @@ class DetailViewController: UIViewController {
     var burstImages: [UIImage?]!
     var currentFrame: Int = 0
     var assets: PHFetchResult!
+    var animTimer: NSTimer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        assets = burstsManager.getBurstImages(
-            burstId,
-            size: view.frame.size,
-            contentMode: .AspectFit) { (images) in
-                self.burstImages = images
-        }
-        
-        NSTimer.scheduledTimerWithTimeInterval(
-            0.1,
+        assets = burstsManager.getBurstImages(burstId)
+        animTimer = NSTimer.scheduledTimerWithTimeInterval(
+            0.05,
             target: self,
             selector: #selector(self.animate),
             userInfo: nil,
             repeats: true
         )
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        animTimer.invalidate()
+        animTimer = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,13 +50,12 @@ class DetailViewController: UIViewController {
     func animate() {
         burstsManager.imageManager.requestImageForAsset(
             assets[currentFrame] as! PHAsset,
-            targetSize: CGSize(width: view.frame.size.width / 2, height: view.frame.size.height / 2),
+            targetSize: CGSize(width: view.frame.size.width, height: view.frame.size.height),
             contentMode: .AspectFit,
             options: nil
         ) {result, info in
             if info![PHImageResultIsDegradedKey] === false {
                 let image = result!
-                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.detailImageView.image = image
                 })
