@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UHe-45-ia3">
-                                <rect key="frame" x="0.0" y="140" width="600" height="320"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UHe-45-ia3">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Leq-e3-Nh2">
                                     <size key="itemSize" width="240" height="320"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -27,7 +27,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BurstPreviewCell" id="rLW-td-OE5" customClass="BurstPreviewCollectionViewCell" customModule="Bursts" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
+                                        <rect key="frame" x="0.0" y="140" width="240" height="320"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="320"/>
@@ -56,8 +56,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="UHe-45-ia3" secondAttribute="bottom" id="JhP-kF-M3H"/>
                             <constraint firstAttribute="trailing" secondItem="UHe-45-ia3" secondAttribute="trailing" id="Mc1-Al-IIE"/>
                             <constraint firstItem="UHe-45-ia3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="OLb-qI-UBQ"/>
+                            <constraint firstItem="UHe-45-ia3" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="PcC-Cn-ouY"/>
                             <constraint firstItem="UHe-45-ia3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XTr-vS-5EY"/>
                         </constraints>
                     </view>
