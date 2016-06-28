@@ -15,6 +15,7 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
     var allBurstIds: [String]!
     var previewSize: CGSize!
     var initialPositionDone = false
+    var animatingCells: [BurstPreviewCollectionViewCell]! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +28,19 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
         collectionView.contentInset = UIEdgeInsetsMake(vMargin, hMargin, vMargin, hMargin)
     }
 
+    override func viewWillAppear(animated: Bool) {
+        startAllAnims()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         if !initialPositionDone {
             collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: allBurstIds.count-1, inSection: 0), atScrollPosition: .None, animated: false)
             initialPositionDone = true
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        stopAllAnims()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -46,13 +55,26 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
         return previewSize
     }
     
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        // Start animating, put in array
+        let burstCell = cell as! BurstPreviewCollectionViewCell
+        burstCell.currentFrame = 0
+        burstCell.burstAssets = burstsManager.getBurstImages(burstCell.burstId)
+        startAnimating(burstCell)
+        animatingCells.append(burstCell)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        // Stop animating, remove from array
+        let burstCell = cell as! BurstPreviewCollectionViewCell
+        stopAnimating(burstCell)
+        let index = animatingCells.indexOf(burstCell)
+        animatingCells.removeAtIndex(index!)
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BurstPreviewCell", forIndexPath: indexPath) as! BurstPreviewCollectionViewCell
-        cell.previewImageView.image = nil
-        burstsManager.getBurstCoverImage(allBurstIds[indexPath.item], size: previewSize, contentMode: .AspectFit, callback: { (image) in
-            cell.previewImageView.image = image
-            cell.burstId = self.allBurstIds[indexPath.item]
-        })
+        cell.burstId = self.allBurstIds[indexPath.item]
         return cell
     }
 
@@ -70,7 +92,32 @@ class LibraryViewController: UIViewController, UICollectionViewDataSource, UICol
         let roundedPosition = round(currentFloatPosition)
         let newX = roundedPosition * (previewSize.width+10) - (view.frame.width - previewSize.width)/2
         scrollView.setContentOffset(CGPoint(x: newX, y: scrollView.contentOffset.y), animated: true)
-
+    }
+    
+    func startAnimating(cell: BurstPreviewCollectionViewCell) {
+        cell.animTimer = NSTimer.scheduledTimerWithTimeInterval(
+            0.05,
+            target: cell,
+            selector: #selector(cell.animate),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    func stopAnimating(cell: BurstPreviewCollectionViewCell) {
+        cell.animTimer.invalidate()
+    }
+    
+    func startAllAnims() {
+        for cell in animatingCells {
+            startAnimating(cell)
+        }
+    }
+    
+    func stopAllAnims() {
+        for cell in animatingCells {
+            stopAnimating(cell)
+        }
     }
     
     override func didReceiveMemoryWarning() {
