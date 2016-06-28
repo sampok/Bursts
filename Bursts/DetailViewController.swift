@@ -15,7 +15,6 @@ class DetailViewController: UIViewController {
     
     var detailAnimImage: UIImage!
     var burstId: String = ""
-    var burstImages: [UIImage?]!
     var currentFrame: Int = 0
     var assets: PHFetchResult!
     var animTimer: NSTimer!
@@ -47,6 +46,30 @@ class DetailViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func onExport(sender: UIButton) {
+        // Load images into an array
+        var images: [UIImage?]! = []
+        for i in 0 ..< assets.count {
+            images.append(nil)
+            burstsManager.imageManager.requestImageForAsset(
+                assets[i] as! PHAsset,
+                targetSize: CGSize(width: view.frame.size.width, height: view.frame.size.height),
+                contentMode: .AspectFit,
+                options: nil
+            ) {result, info in
+                if info![PHImageResultIsDegradedKey] === false {
+                    images[i] = result!
+                    if self._isComplete(images) {
+                        // Call VideoWriter
+                        VideoWriter().writeVideo(images)
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
     func animate() {
         burstsManager.imageManager.requestImageForAsset(
             assets[currentFrame] as! PHAsset,
@@ -66,6 +89,17 @@ class DetailViewController: UIViewController {
         if currentFrame >= assets.count {
             currentFrame = 0
         }
+    }
+    
+    func _isComplete(array: [UIImage?]) -> Bool {
+        var complete = true
+        for i in 0 ..< array.count {
+            if array[i] == nil {
+                complete = false
+                break
+            }
+        }
+        return complete
     }
     
     /*

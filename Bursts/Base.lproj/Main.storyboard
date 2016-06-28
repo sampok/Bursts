@@ -93,6 +93,13 @@
                                     <action selector="onClose:" destination="2c4-fs-bgP" eventType="touchUpInside" id="aG0-eZ-C8q"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6yl-Hx-gZu">
+                                <rect key="frame" x="20" y="14" width="46" height="30"/>
+                                <state key="normal" title="Export"/>
+                                <connections>
+                                    <action selector="onExport:" destination="2c4-fs-bgP" eventType="touchUpInside" id="rO6-8d-VWu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

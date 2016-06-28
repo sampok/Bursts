@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7EEB06D3254CB8C8686DB7A5 /* Pods_BurstsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D51616F3748C37CE147360E /* Pods_BurstsUITests.framework */; };
+		B65BE03B1D231A2F00C62059 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BE03A1D231A2F00C62059 /* VideoWriter.swift */; };
 		B6A318B31D1C7E6D008E2416 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A318B21D1C7E6D008E2416 /* DetailViewController.swift */; };
 		B6EF554B1D1A209A003C6D79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF554A1D1A209A003C6D79 /* AppDelegate.swift */; };
 		B6EF554D1D1A209A003C6D79 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF554C1D1A209A003C6D79 /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		96A218F226C273B774378702 /* Pods-BurstsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BurstsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BurstsTests/Pods-BurstsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0176D0AFB67BB4AFC26413 /* Pods-Bursts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bursts.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bursts/Pods-Bursts.debug.xcconfig"; sourceTree = "<group>"; };
 		9D8097F9D4941423B949A08F /* Pods_BurstsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BurstsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B65BE03A1D231A2F00C62059 /* VideoWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoWriter.swift; sourceTree = "<group>"; };
 		B6A318B21D1C7E6D008E2416 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B6EF55471D1A209A003C6D79 /* Bursts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bursts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EF554A1D1A209A003C6D79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				B6EF557C1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift */,
 				B6EF55781D1A23EF003C6D79 /* LibraryViewController.swift */,
 				B6EF557A1D1A245B003C6D79 /* BurstsManager.swift */,
+				B65BE03A1D231A2F00C62059 /* VideoWriter.swift */,
 				B6EF55511D1A209A003C6D79 /* Assets.xcassets */,
 				B6EF55531D1A209A003C6D79 /* LaunchScreen.storyboard */,
 				B6EF55561D1A209A003C6D79 /* Info.plist */,
@@ -253,6 +256,7 @@
 				TargetAttributes = {
 					B6EF55461D1A209A003C6D79 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = BGW2E4S7A9;
 					};
 					B6EF555A1D1A209A003C6D79 = {
 						CreatedOnToolsVersion = 7.3;
@@ -443,6 +447,7 @@
 				B6EF554D1D1A209A003C6D79 /* ViewController.swift in Sources */,
 				B6EF55791D1A23EF003C6D79 /* LibraryViewController.swift in Sources */,
 				B6A318B31D1C7E6D008E2416 /* DetailViewController.swift in Sources */,
+				B65BE03B1D231A2F00C62059 /* VideoWriter.swift in Sources */,
 				B6EF557D1D1A24A5003C6D79 /* BurstPreviewCollectionViewCell.swift in Sources */,
 				B6EF554B1D1A209A003C6D79 /* AppDelegate.swift in Sources */,
 			);
@@ -587,10 +592,13 @@
 			baseConfigurationReference = 9A0176D0AFB67BB4AFC26413 /* Pods-Bursts.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Bursts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Bursts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -599,10 +607,13 @@
 			baseConfigurationReference = 77FF7466FE9887E517363699 /* Pods-Bursts.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Bursts/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Bursts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
