@@ -12,7 +12,7 @@ import Photos
 
 class VideoWriter: NSObject {
     
-    func writeVideo(images: [UIImage?]) {
+    func writeVideo(assets: PHFetchResult, videoSize: CGSize, fps: Int32) {
         let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         let filePath = paths[0].URLByAppendingPathComponent("export.mov")
         do {
@@ -21,11 +21,11 @@ class VideoWriter: NSObject {
         catch _ as NSError {
             // Assume file doesn't exist.
         }
-        let videoSize = images[0]!.size
-        writeImagesAsMovie(images, videoPathURL: filePath, videoSize: videoSize, videoFPS: 20)
+        // This should be really done in a background thread
+        self.writeImagesAsMovie(assets, videoPathURL: filePath, videoSize: videoSize, videoFPS: fps)
     }
 
-    func writeImagesAsMovie(allImages: [UIImage?], videoPathURL: NSURL, videoSize: CGSize, videoFPS: Int32) {
+    func writeImagesAsMovie(assets: PHFetchResult, videoPathURL: NSURL, videoSize: CGSize, videoFPS: Int32) {
         // Create AVAssetWriter to write video
         guard let assetWriter = createAssetWriter(videoPathURL, size: videoSize) else {
             print("Error converting images to video: AVAssetWriter not created")
@@ -57,19 +57,31 @@ class VideoWriter: NSObject {
         var frameCount = 0
         
         // -- Add images to video
-        let numImages = allImages.count
+        let numImages = assets.count
         writerInput.requestMediaDataWhenReadyOnQueue(mediaQueue, usingBlock: { () -> Void in
             // Append unadded images to video but only while input ready
             while (writerInput.readyForMoreMediaData && frameCount < numImages) {
-                let lastFrameTime = CMTimeMake(Int64(frameCount), videoFPS)
-                let presentationTime = frameCount == 0 ? lastFrameTime : CMTimeAdd(lastFrameTime, frameDuration)
-                
-                if !self.appendPixelBufferForImageAtURL(allImages[frameCount]!, pixelBufferAdaptor: pixelBufferAdaptor, presentationTime: presentationTime) {
-                    print("Error converting images to video: AVAssetWriterInputPixelBufferAdapter failed to append pixel buffer")
-                    return
+                autoreleasepool {
+                    let lastFrameTime = CMTimeMake(Int64(frameCount), videoFPS)
+                    let presentationTime = frameCount == 0 ? lastFrameTime : CMTimeAdd(lastFrameTime, frameDuration)
+                    
+                    let options = PHImageRequestOptions()
+                    options.synchronous = true
+                    burstsManager.imageManager.requestImageForAsset(
+                        assets[frameCount] as! PHAsset,
+                        targetSize: videoSize,
+                        contentMode: .AspectFit,
+                        options: options
+                    ) {result, info in
+                        let resized = self.resizeImage(result!, targetSize: videoSize)
+                        if !self.appendPixelBufferForImageAtURL(resized, pixelBufferAdaptor: pixelBufferAdaptor, presentationTime: presentationTime) {
+                            print("Error converting images to video: AVAssetWriterInputPixelBufferAdapter failed to append pixel buffer")
+                            return
+                        }
+                        frameCount += 1
+                    }
                 }
                 
-                frameCount += 1
             }
             
             // No more images to add? End video.
@@ -165,6 +177,32 @@ class VideoWriter: NSObject {
         CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage)
         
         CVPixelBufferUnlockBaseAddress(pixelBuffer, 0)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+        } else {
+            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.drawInRect(rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 
 

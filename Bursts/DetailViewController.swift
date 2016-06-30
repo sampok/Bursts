@@ -41,27 +41,7 @@ class DetailViewController: UIViewController {
     
     @IBAction func onExport(sender: UIButton) {
         stopAnimating()
-        // Load images into an array
-        var images: [UIImage?]! = []
-        for i in 0 ..< assets.count {
-            images.append(nil)
-            burstsManager.imageManager.requestImageForAsset(
-                assets[i] as! PHAsset,
-                targetSize: CGSize(width: view.frame.size.width, height: view.frame.size.height),
-                contentMode: .AspectFit,
-                options: nil
-            ) {result, info in
-                if info![PHImageResultIsDegradedKey] === false {
-                    images[i] = result!
-                    if self._isComplete(images) {
-                        // Call VideoWriter
-                        VideoWriter().writeVideo(images)
-                    }
-                }
-            }
-        }
-        
-        
+        VideoWriter().writeVideo(assets, videoSize: CGSize(width: 750, height: 1000), fps: 20)
     }
     
     func startAnimating() {
