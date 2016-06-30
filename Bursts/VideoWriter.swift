@@ -14,8 +14,13 @@ class VideoWriter: NSObject {
     
     func writeVideo(images: [UIImage?]) {
         let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        let filePath = paths[0].URLByAppendingPathComponent("test.mov")
-        print(filePath)
+        let filePath = paths[0].URLByAppendingPathComponent("export.mov")
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(filePath)
+        }
+        catch _ as NSError {
+            // Assume file doesn't exist.
+        }
         let videoSize = images[0]!.size
         writeImagesAsMovie(images, videoPathURL: filePath, videoSize: videoSize, videoFPS: 20)
     }

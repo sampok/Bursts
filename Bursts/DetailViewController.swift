@@ -22,14 +22,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assets = burstsManager.getBurstImages(burstId)
-        animTimer = NSTimer.scheduledTimerWithTimeInterval(
-            0.05,
-            target: self,
-            selector: #selector(self.animate),
-            userInfo: nil,
-            repeats: true
-        )
-        
+        startAnimating()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -47,6 +40,7 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func onExport(sender: UIButton) {
+        stopAnimating()
         // Load images into an array
         var images: [UIImage?]! = []
         for i in 0 ..< assets.count {
@@ -68,6 +62,20 @@ class DetailViewController: UIViewController {
         }
         
         
+    }
+    
+    func startAnimating() {
+        animTimer = NSTimer.scheduledTimerWithTimeInterval(
+            0.05,
+            target: self,
+            selector: #selector(self.animate),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    func stopAnimating() {
+        animTimer.invalidate()
     }
     
     func animate() {
